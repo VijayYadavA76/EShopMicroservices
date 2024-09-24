@@ -21,7 +21,8 @@
 				.WithSummary("Get list of Product")
 				.WithDescription("Get list of Product")
 				.Produces<GetProductsResponse>(StatusCodes.Status200OK)
-				.ProducesProblem(StatusCodes.Status400BadRequest);
+				.ProducesProblem(StatusCodes.Status400BadRequest)
+				.ProducesProblem(StatusCodes.Status404NotFound);
 		}
 	}
 }
