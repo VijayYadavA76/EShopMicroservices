@@ -8,7 +8,7 @@ namespace Catalog.API.Products.DeleteProduct
 	{
 		public async Task<DeleteProductResult> Handle(DeleteProductCommand command, CancellationToken cancellationToken)
 		{
-			logger.LogInformation("DeleteProductHandler.Handle with {@Command}", command);
+			logger.LogInformation("DeleteProductHandler.Handle called with {@Command}", command);
 			session.Delete<Product>(command.Id);
 			await session.SaveChangesAsync(cancellationToken);
 			return new DeleteProductResult(true);
