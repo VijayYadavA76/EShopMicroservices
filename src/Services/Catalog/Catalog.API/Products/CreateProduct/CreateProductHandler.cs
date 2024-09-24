@@ -1,5 +1,4 @@
-﻿
-namespace Catalog.API.Products.CreateProduct
+﻿namespace Catalog.API.Products.CreateProduct
 {
 	public record CreateProductCommand
 	(
@@ -11,8 +10,19 @@ namespace Catalog.API.Products.CreateProduct
 	) : ICommand<CreateProductResult>;
 
 	public record CreateProductResult(Guid Id);
+	public class CreateProductCommandValidater : AbstractValidator<CreateProductCommand>
+	{
+		public CreateProductCommandValidater()
+		{
+			RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required");
+			RuleFor(x => x.ImageFile).NotEmpty().WithMessage("ImageFile is required");
+			RuleFor(x => x.Price).GreaterThan(0).WithMessage("Price must be greater than 0");
+			RuleFor(x => x.Category).NotEmpty().WithMessage("Category is required");
+		}
+	};
 
-	internal class CreateProductCommandHandler(IDocumentSession session)
+	internal class CreateProductCommandHandler
+		(IDocumentSession session,IValidator<CreateProductCommand> validator)
 		: ICommandHandler<CreateProductCommand, CreateProductResult>
 	{
 		public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
