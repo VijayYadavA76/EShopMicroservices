@@ -30,7 +30,7 @@
 				.WithName("UpdateProduct")
 				.WithSummary("Update a Product")
 				.WithDescription("Update a Product")
-				.Produces<UpdateProductResponse>(StatusCodes.Status201Created)
+				.Produces<UpdateProductResponse>(StatusCodes.Status200OK)
 				.ProducesProblem(StatusCodes.Status400BadRequest)
 				.ProducesProblem(StatusCodes.Status404NotFound);
 		}
