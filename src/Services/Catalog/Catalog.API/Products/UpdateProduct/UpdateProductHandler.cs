@@ -1,4 +1,6 @@
 ﻿
+using Catalog.API.Products.CreateProduct;
+
 namespace Catalog.API.Products.UpdateProduct
 {
 	public record UpdateProductCommand
@@ -12,6 +14,19 @@ namespace Catalog.API.Products.UpdateProduct
 	) : ICommand<UpdateProductResult>;
 
 	public record UpdateProductResult(bool IsSuccess);
+
+	public class UpdateProductCommandValidater : AbstractValidator<UpdateProductCommand>
+	{
+		public UpdateProductCommandValidater()
+		{
+			RuleFor(x => x.Id).NotEmpty().WithMessage("Product Id is required");
+			RuleFor(x => x.Name)
+				.NotEmpty().WithMessage("Name is required")
+				.Length(2,150).WithMessage("Name Length must be between 2 to 150 charaters");
+			RuleFor(x => x.Price).GreaterThan(0).WithMessage("Price must be greater than 0");
+			RuleFor(x => x.Category).NotEmpty().WithMessage("Category is required");
+		}
+	};
 	internal class UpdateProductHandler(IDocumentSession session, ILogger<UpdateProductHandler> logger)
 		: ICommandHandler<UpdateProductCommand, UpdateProductResult>
 	{
