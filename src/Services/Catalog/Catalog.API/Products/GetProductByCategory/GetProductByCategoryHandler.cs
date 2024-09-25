@@ -1,8 +1,6 @@
-﻿using Marten.Linq.QueryHandlers;
-
-namespace Catalog.API.Products.GetProductByCategory
+﻿namespace Catalog.API.Products.GetProductByCategory
 {
-	public record GetProductByCategoryQuery(string Category) : IQuery<GetProductByCategoryResult>;
+	public record GetProductByCategoryQuery(string Category, int? PageNumber = 1, int? PageSize = 10) : IQuery<GetProductByCategoryResult>;
 	public record GetProductByCategoryResult(IEnumerable<Product> Products);
 	internal class GetProductByCategoryHandler(IDocumentSession session)
 		: IQueryHandler<GetProductByCategoryQuery, GetProductByCategoryResult>
@@ -11,7 +9,7 @@ namespace Catalog.API.Products.GetProductByCategory
 		{
 			var products = await session.Query<Product>()
 				.Where(p => p.Category.Contains(query.Category))
-				.ToListAsync();
+				.ToPagedListAsync(query.PageNumber ?? 1, query.PageSize ?? 10, cancellationToken);
 			return new GetProductByCategoryResult(products);
 		}
 	}
