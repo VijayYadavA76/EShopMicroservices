@@ -13,7 +13,7 @@ namespace Basket.API.Basket.DeleteBasket
 			{
 				var result = await sender.Send(new DeleteBasketCommand(userName));
 
-				var response = sender.Adapt<DeleteBasketResponse>();
+				var response = result.Adapt<DeleteBasketResponse>();
 
 				return Results.Ok(response);
 			})

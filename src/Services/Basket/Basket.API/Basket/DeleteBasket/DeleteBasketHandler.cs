@@ -10,11 +10,12 @@
 			RuleFor(x => x.UserName).NotNull().WithMessage("UserName is required");
 		}
 	};
-	public class DeleteBasketCommandHandler
+	public class DeleteBasketCommandHandler(IBasketRepository repository)
 		: ICommandHandler<DeleteBasketCommand, DeleteBasketResult>
 	{
-		public async Task<DeleteBasketResult> Handle(DeleteBasketCommand request, CancellationToken cancellationToken)
+		public async Task<DeleteBasketResult> Handle(DeleteBasketCommand command, CancellationToken cancellationToken)
 		{
+			await repository.DeleteBasket(command.UserName, cancellationToken);
 			return new DeleteBasketResult(true);
 		}
 	}
