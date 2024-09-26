@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>2a02b30a-1ed4-483f-9ad4-ff230905d1b9</UserSecretsId>
+    <UserSecretsId>c65c6b3f-2636-44a4-b510-ab0b2b56a194</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..</DockerfileContext>
     <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
@@ -12,10 +12,13 @@
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="8.0.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="8.0.1" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="8.0.1" />
     <PackageReference Include="Carter" Version="8.2.1" />
     <PackageReference Include="Marten" Version="7.28.2" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.8" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageReference Include="Scrutor" Version="5.0.1" />
   </ItemGroup>
 
   <ItemGroup>
