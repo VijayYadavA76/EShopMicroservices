@@ -16,6 +16,17 @@ builder.Services.AddMarten(options =>
 }).UseLightweightSessions();
 
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.Decorate<IBasketRepository, CacheBasketRepository>();
+//builder.Services.AddScoped<IBasketRepository>(provider => {
+//	var basketRepository = provider.GetRequiredService<BasketRepository>();
+//	return new CacheBasketRepository(basketRepository,provider.GetRequiredService<IDistributedCache>());
+//});
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+	options.Configuration = builder.Configuration.GetConnectionString("Redis");
+	//options.InstanceName = "Basket";
+});
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 var app = builder.Build();
