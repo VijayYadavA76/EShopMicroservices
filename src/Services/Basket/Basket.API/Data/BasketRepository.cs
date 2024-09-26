@@ -16,9 +16,11 @@
 			await session.SaveChangesAsync(cancellationToken);
 			return basket;
 		}
-		public Task<bool> DeleteBasket(string userName, CancellationToken cancellationToken = default)
+		public async Task<bool> DeleteBasket(string userName, CancellationToken cancellationToken = default)
 		{
-			throw new NotImplementedException();
+			session.Delete<ShoppingCart>(userName);
+			await session.SaveChangesAsync(cancellationToken);
+			return true;
 		}
 	}
 }
