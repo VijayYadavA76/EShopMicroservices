@@ -19,8 +19,8 @@ namespace Basket.API.Basket.GetBasket
 				return Results.Ok(response);
 			})
 			.WithName("GetBasket")
-			.WithSummary("Get list of Basket")
-			.WithDescription("Get list of Basket")
+			.WithSummary("Get Basket by username")
+			.WithDescription("Get Basket by username")
 			.Produces<GetBasketResponse>(StatusCodes.Status200OK)
 			.ProducesProblem(StatusCodes.Status400BadRequest);
 
