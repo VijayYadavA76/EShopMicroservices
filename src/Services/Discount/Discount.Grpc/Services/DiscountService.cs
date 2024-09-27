@@ -12,10 +12,19 @@ namespace Discount.Grpc.Services
 
 		public override Task<DiscountReply> GetDiscount(GetDiscountRequest request, ServerCallContext context)
 		{
-			return Task.FromResult(new DiscountReply
-			{
-				ProductName = "Hello " + request.ProductName
-			});
+			return base.GetDiscount(request, context);
+		}
+		public override Task<DiscountReply> CreateDiscount(CreateDiscountRequest request, ServerCallContext context)
+		{
+			return base.CreateDiscount(request, context);
+		}
+		public override Task<DiscountReply> UpdateDiscount(UpdateDiscountRequest request, ServerCallContext context)
+		{
+			return base.UpdateDiscount(request, context);
+		}
+		public override Task<DeleteDiscountReply> DeleteDiscount(DeleteDiscountRequest request, ServerCallContext context)
+		{
+			return base.DeleteDiscount(request, context);
 		}
 	}
 }
