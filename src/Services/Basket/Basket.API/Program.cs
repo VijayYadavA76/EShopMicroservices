@@ -1,9 +1,12 @@
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using static Discount.Grpc.Discount;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
+
+// Application Services
 builder.Services.AddCarter();
 builder.Services.AddMediatR(config =>
 {
@@ -12,6 +15,7 @@ builder.Services.AddMediatR(config =>
 	config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 });
 
+// Data Services
 builder.Services.AddMarten(options =>
 {
 	options.Connection(builder.Configuration.GetConnectionString("Database")!);
@@ -30,6 +34,22 @@ builder.Services.AddStackExchangeRedisCache(options =>
 	options.Configuration = builder.Configuration.GetConnectionString("Redis");
 	//options.InstanceName = "Basket";
 });
+
+// Grpc Services
+builder.Services.AddGrpcClient<DiscountClient>(options =>
+{
+	options.Address = new Uri(builder.Configuration["GrpcSetting:DiscountUrl"]!);
+}).ConfigurePrimaryHttpMessageHandler(() =>
+{
+	var handler = new HttpClientHandler();
+	//string certificatePath = builder.Configuration["CertificateSettings:Path"]!;
+	//string certificatePassword = builder.Configuration["CertificateSettings:Password"]!;
+	//handler.ClientCertificates.Add(new X509Certificate2(certificatePath, certificatePassword));
+	handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+	return handler;
+});
+
+// Cross-Cutting Services
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 builder.Services.AddHealthChecks()
