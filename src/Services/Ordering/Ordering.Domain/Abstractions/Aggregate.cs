@@ -13,6 +13,8 @@ namespace Ordering.Domain.Abstractions
 		public IDomainEvent[] ClearDomainEvents()
 		{
 			IDomainEvent[] dequeueEvents = _domainEvents.ToArray();
+			_domainEvents.Clear();
+			return dequeueEvents;
 		}
 	}
 }
