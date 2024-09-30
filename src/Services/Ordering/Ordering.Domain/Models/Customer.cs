@@ -7,8 +7,8 @@
 
 		public static Customer Create(CustomerId id, string name, string email)
 		{
-			ArgumentException.ThrowIfNullOrEmpty(name, nameof(name));
-			ArgumentException.ThrowIfNullOrEmpty(email, nameof(email));
+			ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
+			ArgumentException.ThrowIfNullOrWhiteSpace(email, nameof(email));
 
 			var customer = new Customer 
 			{ 
