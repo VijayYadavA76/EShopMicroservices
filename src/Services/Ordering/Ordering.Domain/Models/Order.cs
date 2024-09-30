@@ -37,7 +37,7 @@ namespace Ordering.Domain.Models
 				Payment = payment,
 				Status = OrderStatus.Pending
 			};
-			//order.AddDomainEvent(new OrderCreatedEvent(order));
+			order.AddDomainEvent(new OrderCreatedEvent(order));
 			return order;
 		}
 		public void Update(OrderName orderName, Address shippingAddress, Address billingAddress, Payment payment, OrderStatus status)
@@ -48,7 +48,7 @@ namespace Ordering.Domain.Models
 			Payment = payment;
 			Status = status;
 
-			//AddDomainEvent(new OrderUpdatedEvent(this));
+			AddDomainEvent(new OrderUpdatedEvent(this));
 		}
 		public void Add(ProductId productId,int quantity, decimal price)
 		{
