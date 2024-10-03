@@ -1,9 +1,5 @@
 ﻿
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Ordering.Domain.Enums;
-using Ordering.Domain.Models;
-using Ordering.Domain.ValueObjects;
 
 namespace Ordering.Infrastructure.Data.Configurations
 {
@@ -23,7 +19,7 @@ namespace Ordering.Infrastructure.Data.Configurations
 				.HasForeignKey(o => o.CustomerId)
 				.IsRequired();
 
-			builder.HasMany<OrderItem>()
+			builder.HasMany(o => o.OrderItems)
 				.WithOne()
 				.HasForeignKey(oi => oi.OrderId);
 
@@ -58,7 +54,7 @@ namespace Ordering.Infrastructure.Data.Configurations
 						.HasMaxLength(50);
 
 					addressBuilder.Property(a => a.ZipCode)
-						.HasMaxLength(5).IsRequired();
+						.HasMaxLength(6).IsRequired();
 				}
 			);
 
@@ -84,7 +80,7 @@ namespace Ordering.Infrastructure.Data.Configurations
 						.HasMaxLength(50);
 
 					addressBuilder.Property(a => a.ZipCode)
-						.HasMaxLength(5).IsRequired();
+						.HasMaxLength(6).IsRequired();
 				}
 			);
 
