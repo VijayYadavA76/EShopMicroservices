@@ -1,29 +1,11 @@
-﻿namespace Ordering.Application.Orders.Queries.GetOrderByName
+﻿namespace Ordering.Application.Extentions
 {
-	public class GetOrderByNameHandler(IApplicationDbContext dbContext)
-		: IQueryHandler<GetOrderByNameQuery, GetOrderByNameResult>
+	public static class OrderExtensions
 	{
-		public async Task<GetOrderByNameResult> Handle(GetOrderByNameQuery query, CancellationToken cancellationToken)
+		public static IEnumerable<OrderDto> ToOrderDtoList(this IEnumerable<Order> orders)
 		{
-			var orders = await dbContext.Orders
-				.Include(o => o.OrderItems)
-				.AsNoTracking()
-				.Where(o => o.OrderName.Value.Contains(query.OrderName))
-				.OrderBy(o => o.OrderName)
-				.ToListAsync(cancellationToken);
-
-			var orderDtos = ProjectToOrderDto(orders);
-			
-			return new GetOrderByNameResult(orderDtos);
-		}
-
-		private IEnumerable<OrderDto> ProjectToOrderDto(List<Order> orders)
-		{
-			List<OrderDto> orderDtos = [];
-
-            foreach (var order in orders)
-            {
-				orderDtos.Add(new OrderDto
+			return 
+			orders.Select(order => new OrderDto
 				(
 					Id: order.Id.Value,
 					CustomerId: order.CustomerId.Value,
@@ -65,11 +47,10 @@
 								Quantity: oi.Quantity,
 								Price: oi.Price
 							)
-						).ToList()
-				));
-            }
+					).ToList()
+				)
+			);
 
-            return orderDtos;
 		}
 	}
 }
