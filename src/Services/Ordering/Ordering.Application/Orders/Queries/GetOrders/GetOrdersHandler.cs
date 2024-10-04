@@ -17,7 +17,7 @@ namespace Ordering.Application.Orders.Queries.GetOrders
 					.AsNoTracking()
 					.Skip(pageIndex * pageSize)
 					.Take(pageSize)
-					.OrderBy(o => o.OrderName)
+					.OrderBy(o => o.OrderName.Value)
 					.ToListAsync();
 			
 			return new GetOrdersResult(
