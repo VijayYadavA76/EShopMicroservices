@@ -2,6 +2,7 @@
 global using Marten;
 global using Mapster;
 global using MediatR;
+global using Basket.API.Dtos;
 global using Basket.API.Data;
 global using FluentValidation;
 global using Basket.API.Models;
