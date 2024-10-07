@@ -18,6 +18,7 @@ namespace Ordering.Infrastructure.Data.Configurations
 				.IsRequired();
 
 			builder.Property(p => p.Price)
+				.HasColumnType("decimal(18,2)")
 				.IsRequired();
 		}
 	}

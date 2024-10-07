@@ -100,7 +100,6 @@ namespace Ordering.Infrastructure.Data.Configurations
 						.HasMaxLength(3).IsRequired();
 
 					paymentBuilder.Property(p => p.PaymentMethod);
-
 				}
 			);
 
@@ -109,10 +108,11 @@ namespace Ordering.Infrastructure.Data.Configurations
 				.HasConversion(
 					s => s.ToString(),
 					dbStatus => (OrderStatus)Enum.Parse(typeof(OrderStatus), dbStatus)
-				);
+				).IsRequired();
 
-			builder.Property(o => o.TotalPrice);
-
+			// Specify the column type and precision for TotalPrice
+			builder.Property(o => o.TotalPrice)
+				.HasColumnType("decimal(18,2)"); // Adjust precision and scale as needed
 		}
 	}
 }

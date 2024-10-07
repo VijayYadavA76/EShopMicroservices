@@ -9,11 +9,10 @@ namespace Ordering.Infrastructure.Data.Extentions
 		{
 			using var scope = app.Services.CreateScope();
 			var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-			//context.Database.MigrateAsync().GetAwaiter().GetResult();
+			await context.Database.MigrateAsync();
 
 			await SeedAsync(context);
 
-			return;
 		}
 
 		private static async Task SeedAsync(ApplicationDbContext context)
